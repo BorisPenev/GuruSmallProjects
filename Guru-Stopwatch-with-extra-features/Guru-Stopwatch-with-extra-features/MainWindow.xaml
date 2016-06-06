@@ -1,0 +1,57 @@
+﻿<Window x:Class="Guru_Stopwatch_with_extra_features.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:my="clr-namespace:Guru_Stopwatch_with_extra_features"
+        Title="Stopwatch with extra features">
+   
+    <Window.Resources>
+        <my:MyViewModel x:Key="MyViewModel"/>
+        
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot" 
+          Background="White" 
+          DataContext="{StaticResource MyViewModel}">
+        <telerik:RadGridView Grid.Row="0" 
+                             ShowGroupPanel="False"
+                             Name="customersGrid" 
+                             ItemsSource="{Binding Customers}"
+                             GroupRenderMode="Flat"
+                             NewRowPosition="Bottom"
+                             AutoGenerateColumns="False"
+                             
+                             >
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Name}" Header="Name"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ElapsedTime}" Header="Elapsed Time"/>
+                <telerik:GridViewDataColumn IsReadOnly="True">
+                   <telerik:GridViewDataColumn.CellTemplate>
+                       <DataTemplate>
+                            <telerik:RadButton IsEnabled="{Binding IsStartButtonEnabled}" Tag="Start" Content="Start"
+                                               Command="{Binding StartButtonCommand, Source={StaticResource MyViewModel}}"
+                                               CommandParameter="{Binding}" />
+                        </DataTemplate>
+                   </telerik:GridViewDataColumn.CellTemplate>
+               </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn IsReadOnly="True">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <telerik:RadButton Tag="Pause" Content="Pause"
+                                               Command="{Binding PauseButtonCommand, Source={StaticResource MyViewModel}}" 
+                                               CommandParameter="{Binding}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn IsReadOnly="True">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <telerik:RadButton Tag="Reset" Content="Reset"
+                                               Command="{Binding ResetButtonCommand, Source={StaticResource MyViewModel}}" 
+                                               CommandParameter="{Binding}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                </telerik:GridViewDataColumn>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
+</Window>

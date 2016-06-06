@@ -1,0 +1,32 @@
+﻿<Window x:Class="Guru_Barcode_Generator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:my="clr-namespace:Guru_Barcode_Generator"
+        Title="Guru Barcode Generator" Height="350" Width="525">
+    
+    <Window.Resources>
+        <my:Barcode x:Key="MyViewModel" />
+    </Window.Resources>
+    <Grid DataContext="{StaticResource MyViewModel}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+        <telerik:RadButton Grid.Row="0" Grid.Column="1" Content="Generate Random Barcode" 
+                           Command="{Binding GetRandomNumberCommand, Source={StaticResource MyViewModel}}"
+                           CommandParameter="{Binding}" />
+        
+        <telerik:RadBarcode128 Grid.Row="1" Grid.Column="0"  Text="{Binding Text}" />
+        <telerik:RadBarcodeQR Grid.Row="1" Grid.Column="1"  Version="20" ErrorCorrectionLevel="H" Text="{Binding Text}" 
+                        Mode="Alphanumeric" ECI="None" 
+                        FNC1="None" >
+        </telerik:RadBarcodeQR>
+    </Grid>
+</Window>
